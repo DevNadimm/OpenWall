@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            CustomAppBar(word1: 'Open', word2: 'Wall',),
+            CustomAppBar(word1: 'Open', word2: 'Wall', showBackButton: false),
             SearchBarContainer(),
             CategoryBlock(),
             GridContainer(),

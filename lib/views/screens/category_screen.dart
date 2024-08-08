@@ -16,9 +16,7 @@ class CategoryScreen extends StatelessWidget {
         child: Column(
           children: [
             const CustomAppBar(
-              word1: 'Open',
-              word2: 'Wall',
-            ),
+                word1: 'Open', word2: 'Wall', showBackButton: true),
             Stack(
               children: [
                 Image.asset(
