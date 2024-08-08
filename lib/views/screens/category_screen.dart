@@ -3,7 +3,11 @@ import '../widgets/custom_app_bar.dart';
 import '../widgets/grid_container.dart';
 
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({super.key});
+  const CategoryScreen(
+      {super.key, required this.catName, required this.imagePath});
+
+  final String imagePath;
+  final String catName;
 
   @override
   Widget build(BuildContext context) {
@@ -11,38 +15,38 @@ class CategoryScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const CustomAppBar(word1: 'Open', word2: 'Wall',),
+            const CustomAppBar(
+              word1: 'Open',
+              word2: 'Wall',
+            ),
             Stack(
               children: [
-                Image.network(
+                Image.asset(
                   height: 100,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  'https://images.pexels.com/photos/672451/pexels-photo-672451.jpeg?auto=compress&cs=tinysrgb&w=600',
+                  imagePath,
                 ),
                 Container(
                   height: 100,
                   width: double.infinity,
                   color: Colors.black38,
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Category",
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
+                  child: Center(
+                    child: Text(
+                      catName,
+                      style: const TextStyle(
+                        fontSize: 28,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 10.0,
+                            color: Colors.black,
+                            offset: Offset(0, 0),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "Mountains",
-                        style: TextStyle(
-                            fontSize: 28,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700),
-                      )
-                    ],
+                    ),
                   ),
                 ),
               ],

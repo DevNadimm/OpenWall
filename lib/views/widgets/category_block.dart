@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_wall/views/constants/app_colors.dart';
+import 'package:open_wall/views/screens/category_screen.dart';
 
 class CategoryBlock extends StatelessWidget {
   const CategoryBlock({super.key});
@@ -45,47 +47,60 @@ class CategoryBlock extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(10),
-            child: SizedBox(
-              width: 90,
-              height: 50,
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      color: primaryColor,
-                      image: DecorationImage(
-                        image: AssetImage(
-                          categoryBlockList[index]['imgPath']!,
-                        ),
-                        fit: BoxFit.cover,
-                      ),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => CategoryScreen(
+                      catName: categoryBlockList[index]['name']!,
+                      imagePath: categoryBlockList[index]['imgPath']!,
                     ),
                   ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      color: Colors.black26,
-                    ),
-                  ),
-                  Center(
-                    child: Text(
-                      categoryBlockList[index]['name']!,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 10.0,
-                            color: Colors.black,
-                            offset: Offset(0, 0),
+                );
+              },
+              child: SizedBox(
+                width: 90,
+                height: 50,
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(12)),
+                        color: primaryColor,
+                        image: DecorationImage(
+                          image: AssetImage(
+                            categoryBlockList[index]['imgPath']!,
                           ),
-                        ],
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        color: Colors.black26,
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        categoryBlockList[index]['name']!,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 10.0,
+                              color: Colors.black,
+                              offset: Offset(0, 0),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
