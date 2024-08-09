@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_wall/views/constants/app_colors.dart';
 import 'package:open_wall/models/model.dart';
 import '../../controller/api_operation.dart';
+import '../screens/wallpaper_preview.dart';
 
 class GridContainer extends StatefulWidget {
-  final String? searchQuery;
-  const GridContainer({super.key, this.searchQuery});
+  final String? query;
+
+  const GridContainer({super.key, this.query});
 
   @override
   _GridContainerState createState() => _GridContainerState();
@@ -26,8 +29,8 @@ class _GridContainerState extends State<GridContainer> {
 
   Future<List<Images>> _fetchImages() async {
     try {
-      if (widget.searchQuery != null) {
-        return await _apiOperation.getImagesBySearch(query: widget.searchQuery!);
+      if (widget.query != null) {
+        return await _apiOperation.getImagesBySearch(query: widget.query!);
       } else {
         return await _apiOperation.getImagesList(pageNumber: _currentPage);
       }
@@ -41,13 +44,15 @@ class _GridContainerState extends State<GridContainer> {
       _isFetchingMore = true;
       try {
         _currentPage++;
-        if (widget.searchQuery != null) {
-          final moreImages = await _apiOperation.getImagesBySearch(query: widget.searchQuery!);
+        if (widget.query != null) {
+          final moreImages =
+              await _apiOperation.getImagesBySearch(query: widget.query!);
           setState(() {
             _imagesList.addAll(moreImages);
           });
         } else {
-          final moreImages = await _apiOperation.getImagesList(pageNumber: _currentPage);
+          final moreImages =
+              await _apiOperation.getImagesList(pageNumber: _currentPage);
           setState(() {
             _imagesList.addAll(moreImages);
           });
@@ -68,7 +73,9 @@ class _GridContainerState extends State<GridContainer> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(color: primaryColor,),
+              child: CircularProgressIndicator(
+                color: primaryColor,
+              ),
             );
           }
 
@@ -82,7 +89,8 @@ class _GridContainerState extends State<GridContainer> {
             return NotificationListener<ScrollNotification>(
               onNotification: (ScrollNotification scrollInfo) {
                 if (!_isFetchingMore &&
-                    scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+                    scrollInfo.metrics.pixels ==
+                        scrollInfo.metrics.maxScrollExtent) {
                   _fetchMoreImages();
                 }
                 return true;
@@ -98,13 +106,23 @@ class _GridContainerState extends State<GridContainer> {
                 itemCount: _imagesList.length,
                 itemBuilder: (context, index) {
                   final image = _imagesList[index];
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: colors[index % colors.length],
-                      borderRadius: BorderRadius.circular(12),
-                      image: DecorationImage(
-                        image: NetworkImage(image.imagePortraitUrl),
-                        fit: BoxFit.cover,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (_) => WallpaperPreview(imageUrl: image.imagePortraitUrl, id: image.imageId,),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: colors[index % colors.length],
+                        borderRadius: BorderRadius.circular(12),
+                        image: DecorationImage(
+                          image: NetworkImage(image.imagePortraitUrl),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   );

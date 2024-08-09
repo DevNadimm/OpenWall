@@ -52,7 +52,7 @@ class CategoryScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const GridContainer(),
+            GridContainer(query: catName,),
           ],
         ),
       ),

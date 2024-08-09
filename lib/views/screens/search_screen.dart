@@ -24,7 +24,7 @@ class SearchScreen extends StatelessWidget {
               height: 10,
             ),
             GridContainer(
-              searchQuery: query,
+              query: query,
             ),
           ],
         ),
