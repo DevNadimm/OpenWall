@@ -89,7 +89,7 @@ class _GridContainerState extends State<GridContainer> {
                   final image = _imagesList[index];
                   return Container(
                     decoration: BoxDecoration(
-                      color: primaryColor,
+                      color: colors[index % colors.length],
                       borderRadius: BorderRadius.circular(12),
                       image: DecorationImage(
                         image: NetworkImage(image.imagePortraitUrl),
