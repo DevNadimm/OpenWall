@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../controller/api_operation.dart';
 import '../constants/app_colors.dart';
 
 class WallpaperPreview extends StatelessWidget {
-  const WallpaperPreview({super.key, required this.imageUrl, required this.id});
+  final ApiOperation apiOperation = ApiOperation();
+
+  WallpaperPreview({super.key, required this.imageUrl, required this.id});
 
   final String imageUrl;
   final int id;
@@ -25,7 +28,7 @@ class WallpaperPreview extends StatelessWidget {
             left: 10,
             top: 60,
             child: Card(
-              elevation: 5.0, // Add elevation for shadow
+              elevation: 5.0,
               shape: const CircleBorder(),
               child: CircleAvatar(
                 backgroundColor: const Color(0XFFDCEDF6),
@@ -53,16 +56,19 @@ class WallpaperPreview extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: InkWell(
-                onTap: (){ },
+                onTap: () {
+                  // apiOperation.downloadImage(
+                  //   imgUrl: imageUrl,
+                  //   context: context,
+                  // );
+                },
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.download_rounded),
-                      SizedBox(
-                        width: 4,
-                      ),
+                      SizedBox(width: 4),
                       Text(
                         'Download',
                         style: TextStyle(
@@ -75,7 +81,7 @@ class WallpaperPreview extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
