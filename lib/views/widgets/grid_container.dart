@@ -4,7 +4,8 @@ import 'package:open_wall/models/model.dart';
 import '../../controller/api_operation.dart';
 
 class GridContainer extends StatefulWidget {
-  const GridContainer({super.key});
+  final String? searchQuery;
+  const GridContainer({super.key, this.searchQuery});
 
   @override
   _GridContainerState createState() => _GridContainerState();
@@ -25,8 +26,11 @@ class _GridContainerState extends State<GridContainer> {
 
   Future<List<Images>> _fetchImages() async {
     try {
-      final images = await _apiOperation.getImagesList(pageNumber: _currentPage);
-      return images;
+      if (widget.searchQuery != null) {
+        return await _apiOperation.getImagesBySearch(query: widget.searchQuery!);
+      } else {
+        return await _apiOperation.getImagesList(pageNumber: _currentPage);
+      }
     } catch (e) {
       throw Exception('Failed to load images: $e');
     }
@@ -37,10 +41,17 @@ class _GridContainerState extends State<GridContainer> {
       _isFetchingMore = true;
       try {
         _currentPage++;
-        final moreImages = await _fetchImages();
-        setState(() {
-          _imagesList.addAll(moreImages);
-        });
+        if (widget.searchQuery != null) {
+          final moreImages = await _apiOperation.getImagesBySearch(query: widget.searchQuery!);
+          setState(() {
+            _imagesList.addAll(moreImages);
+          });
+        } else {
+          final moreImages = await _apiOperation.getImagesList(pageNumber: _currentPage);
+          setState(() {
+            _imagesList.addAll(moreImages);
+          });
+        }
       } catch (e) {
         print('Error fetching more images: $e');
       } finally {
@@ -82,7 +93,7 @@ class _GridContainerState extends State<GridContainer> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: 0.6,
+                  childAspectRatio: 0.55,
                 ),
                 itemCount: _imagesList.length,
                 itemBuilder: (context, index) {

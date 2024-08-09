@@ -1,13 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_wall/views/constants/app_colors.dart';
+import 'package:open_wall/views/screens/search_screen.dart';
 
 class SearchBarContainer extends StatelessWidget {
-  SearchBarContainer({super.key});
+  SearchBarContainer({super.key, this.initialQuery});
 
-  TextEditingController searchController = TextEditingController();
+  final String? initialQuery;
+  final TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    if (initialQuery != null) {
+      searchController.text = initialQuery!;
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
@@ -37,7 +44,24 @@ class SearchBarContainer extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                if (searchController.text.trim().isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (_) => SearchScreen(
+                        query: searchController.text,
+                      ),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please enter a search query'),
+                    ),
+                  );
+                }
+              },
               icon: const Icon(
                 Icons.search_rounded,
                 color: mainTextColor,

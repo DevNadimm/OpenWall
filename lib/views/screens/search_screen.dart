@@ -4,7 +4,9 @@ import '../widgets/grid_container.dart';
 import '../widgets/search_bar_container.dart';
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+  const SearchScreen({super.key, required this.query});
+
+  final String query;
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +14,18 @@ class SearchScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const CustomAppBar(word1: 'Open', word2: 'Wall',),
-            SearchBarContainer(),
+            const CustomAppBar(
+              word1: 'Open',
+              word2: 'Wall',
+              showBackButton: true,
+            ),
+            SearchBarContainer(initialQuery: query),
             const SizedBox(
               height: 10,
             ),
-            const GridContainer(),
+            GridContainer(
+              searchQuery: query,
+            ),
           ],
         ),
       ),
