@@ -9,14 +9,14 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            CustomAppBar(word1: 'Open', word2: 'Wall', showBackButton: false),
+            const CustomAppBar(word1: 'Open', word2: 'Wall', showBackButton: false),
             SearchBarContainer(),
-            CategoryBlock(),
-            GridContainer(),
+            const CategoryBlock(),
+            const GridContainer(),
           ],
         ),
       ),

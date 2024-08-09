@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:open_wall/views/constants/app_colors.dart';
 
 class SearchBarContainer extends StatelessWidget {
-  const SearchBarContainer({super.key});
+  SearchBarContainer({super.key});
+
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,10 @@ class SearchBarContainer extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Expanded(
+            Expanded(
               child: TextField(
-                decoration: InputDecoration(
+                controller: searchController,
+                decoration: const InputDecoration(
                   hintText: 'Search...',
                   hintStyle: TextStyle(
                     fontWeight: FontWeight.w600,
@@ -27,7 +30,7 @@ class SearchBarContainer extends StatelessWidget {
                   ),
                   border: InputBorder.none,
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   color: mainTextColor,
                 ),
