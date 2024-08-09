@@ -111,7 +111,7 @@ class _GridContainerState extends State<GridContainer> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (_) => WallpaperPreview(imageUrl: image.imagePortraitUrl, id: image.imageId,),
+                          builder: (_) => WallpaperPreview(imageUrl: image.imagePortraitUrl, imageId: image.imageId,),
                         ),
                       );
                     },

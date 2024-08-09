@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../controller/api_operation.dart';
+import 'package:open_wall/controller/download_operation.dart';
 import '../constants/app_colors.dart';
 
 class WallpaperPreview extends StatelessWidget {
-  final ApiOperation apiOperation = ApiOperation();
+  // final DownloadOperation downloadOperation = DownloadOperation();
 
-  WallpaperPreview({super.key, required this.imageUrl, required this.id});
+  WallpaperPreview({super.key, required this.imageUrl, required this.imageId});
 
   final String imageUrl;
-  final int id;
+  final int imageId;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +57,9 @@ class WallpaperPreview extends StatelessWidget {
               ),
               child: InkWell(
                 onTap: () {
-                  // apiOperation.downloadImage(
+                  // downloadOperation.downloadImage(
                   //   imgUrl: imageUrl,
-                  //   context: context,
+                  //   context: context, id: imageId,
                   // );
                 },
                 child: Container(
