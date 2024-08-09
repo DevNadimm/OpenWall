@@ -4,7 +4,7 @@ import '../models/model.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:open_file/open_file.dart';
 
-class ApiOperator {
+class ApiOperation {
   final String baseUrl = 'https://api.pexels.com/v1/';
   final String apiKey =
       'qWgEoAyVqlReasSo7qq1j1OEDyZfABBqWpot6kur1hrEu1EuNAyZNTW6';
