@@ -39,7 +39,7 @@ class CategoryScreen extends StatelessWidget {
                         shadows: [
                           Shadow(
                             blurRadius: 10.0,
-                            color: Colors.black,
+                            color: Colors.black26,
                             offset: Offset(0, 0),
                           ),
                         ],

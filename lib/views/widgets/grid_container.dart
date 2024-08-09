@@ -12,81 +12,106 @@ class GridContainer extends StatefulWidget {
 
 class _GridContainerState extends State<GridContainer> {
   final ApiOperation _apiOperation = ApiOperation();
-  final List<Images> _imagesList = [];
-  bool _isLoading = true;
+  List<Images> _imagesList = [];
   bool _isFetchingMore = false;
   int _currentPage = 1;
+  Future<List<Images>>? _future;
 
   @override
   void initState() {
     super.initState();
-    _fetchImages();
+    _future = _fetchImages();
   }
 
-  Future<void> _fetchImages() async {
-    setState(() {
-      _isLoading = true;
-    });
-    final images = await _apiOperation.getImagesList(pageNumber: _currentPage);
-    setState(() {
-      _imagesList.addAll(images);
-      _isLoading = false;
-    });
+  Future<List<Images>> _fetchImages() async {
+    try {
+      final images = await _apiOperation.getImagesList(pageNumber: _currentPage);
+      return images;
+    } catch (e) {
+      throw Exception('Failed to load images: $e');
+    }
   }
 
-  Future<void> _fetchMoreImages() async {
-    if (_isFetchingMore) return;
-    setState(() {
+  void _fetchMoreImages() async {
+    if (!_isFetchingMore) {
       _isFetchingMore = true;
-      _currentPage++;
-    });
-    final images = await _apiOperation.getImagesList(pageNumber: _currentPage);
-    setState(() {
-      _imagesList.addAll(images);
-      _isFetchingMore = false;
-    });
+      try {
+        _currentPage++;
+        final moreImages = await _fetchImages();
+        setState(() {
+          _imagesList.addAll(moreImages);
+        });
+      } catch (e) {
+        print('Error fetching more images: $e');
+      } finally {
+        _isFetchingMore = false;
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading && _imagesList.isEmpty) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
     return Expanded(
-      child: NotificationListener<ScrollNotification>(
-        onNotification: (ScrollNotification scrollInfo) {
-          if (!_isFetchingMore &&
-              scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-            _fetchMoreImages();
+      child: FutureBuilder(
+        future: _future,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(color: primaryColor,),
+            );
           }
-          return true;
-        },
-        child: GridView.builder(
-          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.6,
-          ),
-          itemCount: _imagesList.length,
-          itemBuilder: (context, index) {
-            final image = _imagesList[index];
-            return Container(
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                  image: NetworkImage(image.imagePortraitUrl),
-                  fit: BoxFit.cover,
+
+          if (snapshot.hasData) {
+            final newImages = snapshot.data!;
+            for (final image in newImages) {
+              if (!_imagesList.contains(image)) {
+                _imagesList.add(image);
+              }
+            }
+            return NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (!_isFetchingMore &&
+                    scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+                  _fetchMoreImages();
+                }
+                return true;
+              },
+              child: GridView.builder(
+                padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 0.6,
                 ),
+                itemCount: _imagesList.length,
+                itemBuilder: (context, index) {
+                  final image = _imagesList[index];
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(12),
+                      image: DecorationImage(
+                        image: NetworkImage(image.imagePortraitUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                },
               ),
             );
-          },
-        ),
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Something went wrong! ${snapshot.error}'),
+            );
+          }
+
+          return const Center(
+            child: Text('No data'),
+          );
+        },
       ),
     );
   }
