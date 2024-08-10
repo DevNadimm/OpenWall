@@ -23,6 +23,21 @@ class _SearchScreenState extends State<SearchScreen> {
     searchController.text = _query;
   }
 
+  void _search(BuildContext context) {
+    FocusScope.of(context).unfocus();
+    if (searchController.text.trim().isNotEmpty) {
+      setState(() {
+        _query = searchController.text.trim();
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter a search query'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +54,8 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Container(
                 padding: const EdgeInsets.only(left: 16),
                 decoration: BoxDecoration(
-                  border: Border.all(color: primaryColor.withOpacity(0.4), width: 2),
+                  border: Border.all(
+                      color: primaryColor.withOpacity(0.4), width: 2),
                   color: primaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -61,22 +77,15 @@ class _SearchScreenState extends State<SearchScreen> {
                           fontWeight: FontWeight.w600,
                           color: mainTextColor,
                         ),
+                        textInputAction: TextInputAction.search,
+                        onSubmitted: (value) {
+                          _search(context);
+                        },
                       ),
                     ),
                     IconButton(
                       onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        if (searchController.text.trim().isNotEmpty) {
-                          setState(() {
-                            _query = searchController.text.trim();
-                          });
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Please enter a search query'),
-                            ),
-                          );
-                        }
+                        _search(context);
                       },
                       icon: const Icon(
                         Icons.search_rounded,

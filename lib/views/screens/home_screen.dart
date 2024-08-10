@@ -11,6 +11,25 @@ class HomeScreen extends StatelessWidget {
 
   final TextEditingController searchController = TextEditingController();
 
+  void _search(BuildContext context) {
+    if (searchController.text.trim().isNotEmpty) {
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (_) => SearchScreen(
+            query: searchController.text,
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter a search query'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,26 +66,15 @@ class HomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                           color: mainTextColor,
                         ),
+                        textInputAction: TextInputAction.search,
+                        onSubmitted: (value) {
+                          _search(context);
+                        },
                       ),
                     ),
                     IconButton(
                       onPressed: () {
-                        if (searchController.text.trim().isNotEmpty) {
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (_) => SearchScreen(
-                                query: searchController.text,
-                              ),
-                            ),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Please enter a search query'),
-                            ),
-                          );
-                        }
+                        _search(context);
                       },
                       icon: const Icon(
                         Icons.search_rounded,
