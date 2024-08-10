@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware {
   final TextEditingController searchController = TextEditingController();
-  final FocusNode searchFocusNode = FocusNode(); // Add FocusNode
+  final FocusNode searchFocusNode = FocusNode();
 
   void _search(BuildContext context) {
     if (searchController.text.trim().isNotEmpty) {
