@@ -4,17 +4,12 @@ import 'package:open_wall/views/constants/app_colors.dart';
 import 'package:open_wall/views/screens/search_screen.dart';
 
 class SearchBarContainer extends StatelessWidget {
-  SearchBarContainer({super.key, this.initialQuery});
-
-  final String? initialQuery;
   final TextEditingController searchController = TextEditingController();
+
+  SearchBarContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (initialQuery != null) {
-      searchController.text = initialQuery!;
-    }
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
@@ -29,6 +24,7 @@ class SearchBarContainer extends StatelessWidget {
             Expanded(
               child: TextField(
                 controller: searchController,
+                cursorColor: primaryColor,
                 decoration: const InputDecoration(
                   hintText: 'Search...',
                   hintStyle: TextStyle(

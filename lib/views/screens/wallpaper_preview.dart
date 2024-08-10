@@ -67,10 +67,10 @@ class WallpaperPreview extends StatelessWidget {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.wallpaper_rounded),
+                      Icon(Icons.cloud_download_rounded),
                       SizedBox(width: 4),
                       Text(
-                        'Set Wallpaper',
+                        'Download',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
