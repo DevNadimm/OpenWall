@@ -52,7 +52,7 @@ class CustomAppBar extends StatelessWidget {
               child: CupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.pop(context);
                 },
                 child: const Icon(
                   CupertinoIcons.back,

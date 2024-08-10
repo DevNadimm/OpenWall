@@ -65,6 +65,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     IconButton(
                       onPressed: () {
+                        FocusScope.of(context).unfocus();
                         if (searchController.text.trim().isNotEmpty) {
                           setState(() {
                             _query = searchController.text.trim();
