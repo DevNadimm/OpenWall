@@ -5,7 +5,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 
 class WallpaperOperation {
-  final String baseUrl = 'https://api.pexels.com/v1/';
   final String apiKey =
       'qWgEoAyVqlReasSo7qq1j1OEDyZfABBqWpot6kur1hrEu1EuNAyZNTW6';
 
