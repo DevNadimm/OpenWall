@@ -4,7 +4,7 @@ import 'package:open_wall/controller/download_operation.dart';
 import '../constants/app_colors.dart';
 
 class WallpaperPreview extends StatelessWidget {
-  // final DownloadOperation downloadOperation = DownloadOperation();
+  final DownloadOperation downloadOperation = DownloadOperation();
 
   WallpaperPreview({super.key, required this.imageUrl, required this.imageId});
 
@@ -57,20 +57,20 @@ class WallpaperPreview extends StatelessWidget {
               ),
               child: InkWell(
                 onTap: () {
-                  // downloadOperation.downloadImage(
-                  //   imgUrl: imageUrl,
-                  //   context: context, id: imageId,
-                  // );
+                  downloadOperation.downloadImage(
+                    imgUrl: imageUrl,
+                    context: context, id: imageId,
+                  );
                 },
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.download_rounded),
+                      Icon(Icons.wallpaper_rounded),
                       SizedBox(width: 4),
                       Text(
-                        'Download',
+                        'Set Wallpaper',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
