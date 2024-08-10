@@ -6,10 +6,18 @@ import '../constants/app_colors.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/grid_container.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  final RouteObserver<ModalRoute<void>> routeObserver;
 
+  const HomeScreen({super.key, required this.routeObserver});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with RouteAware {
   final TextEditingController searchController = TextEditingController();
+  final FocusNode searchFocusNode = FocusNode(); // Add FocusNode
 
   void _search(BuildContext context) {
     if (searchController.text.trim().isNotEmpty) {
@@ -31,13 +39,37 @@ class HomeScreen extends StatelessWidget {
   }
 
   @override
+  void didPopNext() {
+    super.didPopNext();
+    searchController.clear();
+    searchFocusNode.unfocus();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    widget.routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    widget.routeObserver.unsubscribe(this);
+    searchController.dispose();
+    searchFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             const CustomAppBar(
-                word1: 'Open', word2: 'Wall', showBackButton: false),
+              word1: 'Open',
+              word2: 'Wall',
+              showBackButton: false,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Container(
@@ -53,6 +85,7 @@ class HomeScreen extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         controller: searchController,
+                        focusNode: searchFocusNode,
                         cursorColor: primaryColor,
                         decoration: const InputDecoration(
                           hintText: 'Search...',

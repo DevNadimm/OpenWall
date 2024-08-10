@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:open_wall/views/constants/app_colors.dart';
 import 'package:open_wall/views/screens/home_screen.dart';
 
+final RouteObserver<ModalRoute<void>> routeObserver =
+    RouteObserver<ModalRoute<void>>();
+
 void main() {
   runApp(const MyApp());
 }
@@ -15,10 +18,11 @@ class MyApp extends StatelessWidget {
       title: 'OpenWall',
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: backgroundColor
+        scaffoldBackgroundColor: backgroundColor,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: HomeScreen(routeObserver: routeObserver),
+      navigatorObservers: [routeObserver],
     );
   }
 }
