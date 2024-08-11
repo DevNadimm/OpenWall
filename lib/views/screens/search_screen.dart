@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../constants/app_colors.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/grid_container.dart';
@@ -30,10 +31,13 @@ class _SearchScreenState extends State<SearchScreen> {
         _query = searchController.text.trim();
       });
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter a search query'),
-        ),
+      Fluttertoast.showToast(
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black87,
+        textColor: Colors.red,
+        fontSize: 16.0,
+        msg: 'Please enter a search query',
       );
     }
   }

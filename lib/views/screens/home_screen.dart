@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:open_wall/views/screens/search_screen.dart';
 import 'package:open_wall/views/widgets/category_block.dart';
 import '../constants/app_colors.dart';
@@ -30,10 +31,13 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter a search query'),
-        ),
+      Fluttertoast.showToast(
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black87,
+        textColor: Colors.red,
+        fontSize: 16.0,
+        msg: 'Please enter a search query',
       );
     }
   }
