@@ -1,29 +1,84 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:open_wall/controller/wallpaper_operation.dart';
 import '../constants/app_colors.dart';
 
-class WallpaperPreview extends StatelessWidget {
+class WallpaperPreview extends StatefulWidget {
   final WallpaperOperation wallpaperOperation = WallpaperOperation();
 
-  WallpaperPreview({super.key, required this.imageUrl, required this.imageId});
+  WallpaperPreview({
+    super.key,
+    required this.imageOriginalUrl,
+    required this.imagePortraitUrl,
+    required this.imageId,
+  });
 
-  final String imageUrl;
+  final String imageOriginalUrl;
+  final String imagePortraitUrl;
   final int imageId;
+
+  @override
+  _WallpaperPreviewState createState() => _WallpaperPreviewState();
+}
+
+class _WallpaperPreviewState extends State<WallpaperPreview> {
+  late Future<void> _loadOriginalImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadOriginalImage = _preloadOriginalImage();
+  }
+
+  Future<void> _preloadOriginalImage() async {
+    final image = NetworkImage(widget.imageOriginalUrl);
+    final completer = Completer<void>();
+    final stream = image.resolve(const ImageConfiguration());
+
+    stream.addListener(ImageStreamListener(
+      (imageInfo, synchronousCall) {
+        completer.complete();
+      },
+      onError: (error, stackTrace) {
+        completer.completeError(error, stackTrace);
+      },
+    ));
+
+    return completer.future;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(imageUrl),
-                fit: BoxFit.cover,
-              ),
-            ),
+          Image.network(
+            widget.imagePortraitUrl,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          FutureBuilder<void>(
+            future: _loadOriginalImage,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Image.network(
+                  widget.imageOriginalUrl,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: primaryColor,
+                  ),
+                );
+              }
+            },
           ),
           Positioned(
             left: 10,
@@ -169,8 +224,9 @@ class WallpaperPreview extends StatelessWidget {
 
   void _setWallpaper(BuildContext context,
       {required bool homeScreen, required bool lockScreen}) {
-    wallpaperOperation.setWallpaper(
-      imgUrl: imageUrl,
+    _showToast('Setting wallpaper. Please wait...', Colors.blue);
+    widget.wallpaperOperation.setWallpaper(
+      imgUrl: widget.imageOriginalUrl,
       context: context,
       homeScreen: homeScreen,
       lockScreen: lockScreen,
