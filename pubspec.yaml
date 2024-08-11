@@ -10,10 +10,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   http: ^1.2.2
-  path_provider: any
-  open_file: any
-  flutter_wallpaper_manager: any
-  fluttertoast: any
+  path_provider: ^2.1.4
+  open_file: ^3.3.2
+  fluttertoast: ^8.2.6
+  flutter_wallpaper_manager: ^0.0.3
 
 dev_dependencies:
   flutter_test:

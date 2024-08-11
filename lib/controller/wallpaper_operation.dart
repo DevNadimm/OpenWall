@@ -46,6 +46,8 @@ class WallpaperOperation {
         if (await file.exists()) {
           return filePath;
         }
+      } else {
+        print('Failed to download image. Status code: ${response.statusCode}');
       }
     } catch (e) {
       print('Error during image download: $e');
