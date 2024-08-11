@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:open_wall/controller/wallpaper_operation.dart';
 import '../constants/app_colors.dart';
 
@@ -39,7 +40,7 @@ class WallpaperPreview extends StatelessWidget {
                   },
                   child: const Icon(
                     CupertinoIcons.back,
-                    color: mainTextColor,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -88,10 +89,15 @@ class WallpaperPreview extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Padding(
-          padding: const EdgeInsets.all(12),
-          child: Container(
-            color: backgroundColor,
+        return Container(
+          decoration: const BoxDecoration(
+            color: Color(0XFFDCEDF6),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(16.0),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -100,16 +106,18 @@ class WallpaperPreview extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: mainTextColor,
                   ),
                 ),
                 ListTile(
-                  leading: const Icon(Icons.home_outlined),
-                  title: Text(
+                  leading: const Icon(
+                    Icons.home_outlined,
+                    color: mainTextColor,
+                  ),
+                  title: const Text(
                     'Home Screen',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      color: mainTextColor.withOpacity(0.9),
+                      color: mainTextColor,
                     ),
                   ),
                   onTap: () {
@@ -118,12 +126,15 @@ class WallpaperPreview extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.lock_outline_rounded),
-                  title: Text(
+                  leading: const Icon(
+                    Icons.lock_outline_rounded,
+                    color: mainTextColor,
+                  ),
+                  title: const Text(
                     'Lock Screen',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      color: mainTextColor.withOpacity(0.9),
+                      color: mainTextColor,
                     ),
                   ),
                   onTap: () {
@@ -132,12 +143,15 @@ class WallpaperPreview extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.mobile_friendly_rounded),
-                  title: Text(
+                  leading: const Icon(
+                    Icons.mobile_friendly_rounded,
+                    color: mainTextColor,
+                  ),
+                  title: const Text(
                     'Both Screens',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      color: mainTextColor.withOpacity(0.9),
+                      color: mainTextColor,
                     ),
                   ),
                   onTap: () {
@@ -161,37 +175,22 @@ class WallpaperPreview extends StatelessWidget {
       homeScreen: homeScreen,
       lockScreen: lockScreen,
       onSuccess: () {
-        _showSnackBar(context, 'Wallpaper set successfully', Colors.green);
+        _showToast('Wallpaper set successfully', Colors.green);
       },
       onError: (message) {
-        _showSnackBar(context, message, Colors.red);
+        _showToast(message, Colors.red);
       },
     );
   }
 
-  void _showSnackBar(BuildContext context, String message, Color color) {
-    if (context.mounted) {
-      final snackBar = SnackBar(
-        content: Row(
-          children: [
-            Icon(
-              Icons.wallpaper,
-              color: color,
-            ),
-            const SizedBox(width: 10),
-            Expanded(child: Text(message)),
-          ],
-        ),
-        backgroundColor: Colors.black87,
-        duration: const Duration(seconds: 4),
-        behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+  void _showToast(String message, Color color) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.black87,
+      textColor: color,
+      fontSize: 16.0,
+    );
   }
 }

@@ -13,6 +13,7 @@ dependencies:
   path_provider: any
   open_file: any
   flutter_wallpaper_manager: ^0.0.4
+  fluttertoast: any
 
 dev_dependencies:
   flutter_test:
