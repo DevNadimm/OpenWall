@@ -12,7 +12,7 @@ dependencies:
   http: ^1.2.2
   path_provider: any
   open_file: any
-  flutter_wallpaper_manager: ^0.0.4
+  flutter_wallpaper_manager: any
   fluttertoast: any
 
 dev_dependencies:

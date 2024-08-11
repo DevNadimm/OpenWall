@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    compileSdkVersion 33
     namespace = "com.example.open_wall"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
