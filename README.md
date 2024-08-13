@@ -1,6 +1,9 @@
 # OpenWall
 
-**OpenWall** is a Flutter-based wallpaper app that allows users to set modern and high-quality wallpapers on their phones. This app utilizes the [Pexels API](https://www.pexels.com/api/) to provide a wide range of stunning wallpapers. The app is designed with a clean and intuitive interface, making it easy for users to browse, search, and download wallpapers.
+**OpenWall** is a Flutter-based wallpaper app that allows users to set modern and high-quality
+wallpapers on their phones. This app utilizes the [Pexels API](https://www.pexels.com/api/) to
+provide a wide range of stunning wallpapers. The app is designed with a clean and intuitive
+interface, making it easy for users to browse, search, and set wallpapers.
 
 ![OpenWall Banner](assets/banner_image/banner.jpg)
 
@@ -37,7 +40,8 @@ To get started with OpenWall, follow these steps:
 
 ## API Integration
 
-This app uses the [Pexels API](https://www.pexels.com/api/) to fetch and display wallpapers. To use the API, you'll need to obtain an API key from Pexels and add it to your project.
+This app uses the [Pexels API](https://www.pexels.com/api/) to fetch and display wallpapers. To use
+the API, you'll need to obtain an API key from Pexels and add it to your project.
 
 1. **Get your API key:**
     - Sign up at [Pexels](https://www.pexels.com/api/) and obtain your API key.
@@ -51,8 +55,8 @@ This app uses the [Pexels API](https://www.pexels.com/api/) to fetch and display
 
 ## Contributing
 
-Contributions are welcome! If you have any suggestions, bug reports, or feature requests, feel free to open an issue or submit a pull request.
-
+Contributions are welcome! If you have any suggestions, bug reports, or feature requests, feel free
+to open an issue or submit a pull request.
 
 ## Contact
 
