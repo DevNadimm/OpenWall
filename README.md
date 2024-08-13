@@ -50,7 +50,7 @@ the API, you'll need to obtain an API key from Pexels and add it to your project
     - Replace the placeholder API key in the project with your own.
 
     ```dart
-    const String pexelsApiKey = 'YOUR_API_KEY_HERE';
+    const String apiKey = 'YOUR_API_KEY_HERE';
     ```
 
 ## Contributing
