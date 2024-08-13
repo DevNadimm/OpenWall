@@ -9,8 +9,6 @@
 - **Browse Wallpapers:** Explore a wide variety of wallpapers from different categories.
 - **Search Functionality:** Quickly find the perfect wallpaper by searching with keywords.
 - **Set Wallpapers:** Easily set wallpapers directly from the app.
-- **Download Wallpapers:** Download your favorite wallpapers to your device.
-- **Dynamic Grid Layout:** A responsive grid layout that adapts to different screen sizes.
 - **Toast Notifications:** Receive toast notifications for actions such as setting wallpapers.
 - **Modern UI Design:** A sleek and modern user interface with a blue and white theme.
 
